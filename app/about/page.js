@@ -2,10 +2,18 @@ import React from "react";
 import Navigation from "@/app/_components/Navigation";
 import Image from "next/image";
 import image1  from "@/public/about-1.jpg"
+import { getCabins } from "../_lib/data-service";
+
+
+export const revalidate=15;
+
 export const metadata={
   title:"About",
 }
-const Page=()=> {
+const Page= async ()=> {
+  const cabins = await getCabins()
+  const cabinsLength = cabins.length;
+console.log(cabinsLength);
   return (
     <div className="grid grid-cols-5 gap-x-24 gap-y-32 text-lg items-center">
       <div className="col-span-3">
@@ -22,7 +30,7 @@ const Page=()=> {
             simple pleasures with family.
           </p>
           <p>
-            Our 8 luxury cabins provide a cozy base, but the real freedom and
+            Our {cabinsLength} luxury cabins provide a cozy base, but the real freedom and
             peace you&apos;ll find in the surrounding mountains. Wander through lush
             forests, breathe in the fresh air, and watch the stars twinkle above
             from the warmth of a campfire or your hot tub.

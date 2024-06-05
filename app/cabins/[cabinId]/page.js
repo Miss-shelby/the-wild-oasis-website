@@ -1,6 +1,6 @@
 import { EyeSlashIcon, MapPinIcon, UsersIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
-import { getCabin } from "@/app/_lib/data-service";
+import { getCabin, getCabins } from "@/app/_lib/data-service";
 
 //generating dynamic metadata for our cabins
 
@@ -9,6 +9,14 @@ export const generateMetadata = async ({params})=>{
     return {title: `Cabin ${name}` };
 }
 
+//function to let know nextjs know the possible url of dynamic segment inorder to export/render them as static pages
+
+export const generateStaticParams= async ()=>{
+  const cabins = await getCabins()
+  const ids = cabins.map((cabin)=>({cabinId:String(cabin.id)}))
+  console.log(ids);
+  return ids;
+}
 const  Page = async ({params}) =>{
     const cabin = await getCabin(params.cabinId);
 
