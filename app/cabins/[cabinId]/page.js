@@ -1,6 +1,10 @@
+import Reservation from "@/app/_components/Reservation";
+import Spinner from "@/app/_components/Spinner";
+import TextExpander from "@/app/_components/TextExpander";
+import { getCabin, getCabins } from "@/app/_lib/data-service";
 import { EyeSlashIcon, MapPinIcon, UsersIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
-import { getCabin, getCabins } from "@/app/_lib/data-service";
+import { Suspense } from "react";
 
 //generating dynamic metadata for our cabins
 
@@ -9,21 +13,33 @@ export const generateMetadata = async ({params})=>{
     return {title: `Cabin ${name}` };
 }
 
-//function to let know nextjs know the possible url of dynamic segment inorder to export/render them as static pages
+//function to let know nextjs know the possible url of dynamic segment
+// inorder to export/render them as static pages
 
 export const generateStaticParams= async ()=>{
   const cabins = await getCabins()
   const ids = cabins.map((cabin)=>({cabinId:String(cabin.id)}))
-  console.log(ids);
   return ids;
 }
+
+
 const  Page = async ({params}) =>{
     const cabin = await getCabin(params.cabinId);
+// const settings = await getSettings()
+// const bookedDates = await getBookedDatesByCabinId(params.cabinId)
+    //we are fetching this data here becasause we dont want to fetch data  client component
+    //we use promse.all when we have multiple fetch fequest on a page that dosent depend on each others,
+  // so it fetches data in parrel so the fetch request dosent block each other from happening but thats not the best we can create component for each fecth request
+  // and stream them in when theyre ready with suspense
+
+
+ 
+
 
   const { id, name, maxCapacity, regularPrice, discount, image, description } =
     cabin;
 
-
+    
   return (
     <div className="max-w-6xl mx-auto mt-8">
       <div className="grid grid-cols-[3fr_4fr] gap-20 border border-primary-800 py-3 px-10 mb-24">
@@ -36,7 +52,9 @@ const  Page = async ({params}) =>{
             Cabin {name}
           </h3>
 
-          <p className="text-lg text-primary-300 mb-10">{description}</p>
+          <p className="text-lg text-primary-300 mb-10">
+          <TextExpander>{String(description)}</TextExpander>
+           </p>
 
           <ul className="flex flex-col gap-4 mb-7">
             <li className="flex gap-3 items-center">
@@ -64,11 +82,18 @@ const  Page = async ({params}) =>{
       </div>
 
       <div>
-        <h2 className="text-5xl font-semibold text-center">
-          Reserve today. Pay on arrival.
+        <h2 className="text-5xl font-semibold text-center mb-0 text-accent-400">
+          Reserve {name} today. Pay on arrival.
         </h2>
+       <Suspense fallback={<Spinner/>}>
+       <Reservation cabin={cabin}/>
+       </Suspense>
       </div>
     </div>
   );
 }
 export default Page;
+
+// To fully leverage ISR, ensure that revalidate is used if you need periodic updates to your static 
+// pages without a full rebuild. This is particularly useful for content that changes occasionally
+//  but doesn't need to be fetched on every request.

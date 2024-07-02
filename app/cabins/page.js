@@ -3,14 +3,22 @@ import CabinCard from '@/app/_components/CabinCard';
 import { getCabins } from '../_lib/data-service';
 import CabinList from '../_components/CabinList';
 import Spinner from '../_components/Spinner';
+import Filter from '../_components/filter';
+import ReservationReminder from '../_components/ReservationReminder';
 
 //to force it to render dynamically
 export const revalidate=15;
+//the revalidate no longer work because the page is now rendered dynamically because of search params
 export const metadata={
   title:'Cabins',
 }
-const Page= ()=> {
+const Page= ({searchParams})=> {
 
+const filter = searchParams?.capacity ?? "all";
+
+
+// The nullish coalescing operator (??) checks if the result of searchParams?.capacity is null or undefined. 
+// If it is, "all" is used as a default value.
   return (
     <div>
       <h1 className="text-4xl mb-5 text-accent-400 font-medium">
@@ -24,11 +32,15 @@ const Page= ()=> {
         away from home. The perfect spot for a peaceful, calm vacation. Welcome
         to paradise.
       </p>
-      <Suspense fallback={<Spinner/>}>
-
-     <CabinList/>
+      <div className='flex justify-end mb-8'>
+      <Filter/>
+      </div >
+      <Suspense fallback={<Spinner/>} key={filter}>
+     <CabinList filter={filter}/>
+      <ReservationReminder/>
       </Suspense>
     </div>
   );
 }
 export default Page;
+//we added key so that the suspense works for the children of the cabinlist taht we are suspending

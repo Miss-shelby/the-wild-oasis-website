@@ -41,6 +41,9 @@ export const getCabins = async function () {
     .from('cabins')
     .select('id, name, maxCapacity, regularPrice, discount, image')
     .order('name');
+    //for testing
+
+    // await new Promise((resolve)=> setTimeout(resolve,2000))
 
   if (error) {
     console.error(error);
