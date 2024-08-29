@@ -86,7 +86,7 @@ const  Page = async ({params}) =>{
           Reserve {name} today. Pay on arrival.
         </h2>
        <Suspense fallback={<Spinner/>}>
-       <Reservation cabin={cabin}/>
+          <Reservation cabin={cabin}/>
        </Suspense>
       </div>
     </div>

@@ -12,14 +12,13 @@ const josefin = Josefin_Sans({
   display:"swap",
 });
 
-console.log(josefin);
 export const metadata={
   title:{
     template:'%s /The wild Oasis',
     default:"Welcome / The wild Oasis"
   },
   description:
-  "Luxurious cabin hotel,Located in the heart of the Italian Dolomites surrounded by beautiful mountains and drak forests",
+  "Luxurious cabin hotel,Located in the heart of the Italian Dolomites surrounded by beautiful mountains and dark forests",
 }
 export default function RootLayout({ children }) {
   return (

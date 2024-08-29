@@ -16,9 +16,12 @@ const Page= ({searchParams})=> {
 
 const filter = searchParams?.capacity ?? "all";
 
+console.log(filter,'filter');
+
 
 // The nullish coalescing operator (??) checks if the result of searchParams?.capacity is null or undefined. 
 // If it is, "all" is used as a default value.
+//search paarms is used to get the search params atached to a url  e.g http://localhost:3001/cabins?capacity=all,searc params here is capacity = small
   return (
     <div>
       <h1 className="text-4xl mb-5 text-accent-400 font-medium">

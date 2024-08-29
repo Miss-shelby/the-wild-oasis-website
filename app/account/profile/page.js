@@ -21,13 +21,13 @@ export default function Page() {
         faster and smoother. See you soon!
       </p>
 
-     {/* <UpdateProfileForm>
+     <UpdateProfileForm>
       <SelectCountry
             name="nationality"
             id="nationality"
             className="px-5 py-3 bg-primary-200 text-primary-800 w-full shadow-sm rounded-sm"
-            defaultCountry={nationality}
-          /></UpdateProfileForm> */}
+            defaultCountry={nationality}/>
+      </UpdateProfileForm>
     </div>
   );
 }

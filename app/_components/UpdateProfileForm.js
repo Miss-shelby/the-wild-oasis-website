@@ -1,11 +1,12 @@
 'use client'
 import React, { useState } from 'react'
-import SelectCountry from './SelectCountry'
+
 import Image from 'next/image'
 
 
 const UpdateProfileForm = ({children}) => {
     const [count,setCount]=useState("")
+     const countryFlag = "/bg.png";
   return (
     <form className="bg-primary-900 py-8 px-12 text-lg flex gap-6 flex-col">
         <div className="space-y-2">
@@ -28,7 +29,7 @@ const UpdateProfileForm = ({children}) => {
           <div className="flex items-center justify-between">
             <label htmlFor="nationality">Where are you from?</label>
             <div className="relative scale-[1.15] -translate-x-3">
-            <Image src={countryFlag} alt="Country flag" 
+            <Image fill  src={countryFlag}  alt="Country flag" 
               className="h-5 rounded-sm "/>
             </div>
             {/* <Image src="/bg.png" alt=""/> */}
